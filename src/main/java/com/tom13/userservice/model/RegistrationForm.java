@@ -7,11 +7,9 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 public class RegistrationForm {
     private String username;
     private String password;
-    private String Fullname;
-    private Boolean admin;
-    private Boolean nonLocked = true;
+    private String fullname;
 
     public User toUser(PasswordEncoder passwordEncoder) {
-        return new User( username, passwordEncoder.encode(password), Fullname);
+        return new User(username, passwordEncoder.encode(password), fullname);
     }
 }

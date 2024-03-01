@@ -13,8 +13,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequiredArgsConstructor
 public class RegistrationController {
 
-    private UserRepository userRepo;
-    private PasswordEncoder passwordEncoder;
+    private final UserRepository userRepo;
+    private final PasswordEncoder passwordEncoder;
 
     @GetMapping
     public String registerForm() {
@@ -22,6 +22,7 @@ public class RegistrationController {
     }
     @PostMapping
     public String processRegistration(RegistrationForm form) {
+        System.out.println(form);
         userRepo.save(form.toUser(passwordEncoder));
         return "redirect:/login";
     }

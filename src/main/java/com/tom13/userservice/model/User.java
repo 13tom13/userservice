@@ -5,9 +5,9 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Arrays;
 import java.util.Collection;
@@ -21,13 +21,13 @@ import java.util.Collection;
 public class User implements UserDetails {
     private static final long serialVersionUID = 1L;
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private final String username;
     private final String password;
     private final String fullname;
     private Boolean admin;
-    private Boolean nonLocked = true;
+    private Boolean nonlocked;
 
 
     @Override
@@ -42,7 +42,7 @@ public class User implements UserDetails {
 
     @Override
     public boolean isAccountNonLocked() {
-        return nonLocked;
+        return true;
     }
 
     @Override

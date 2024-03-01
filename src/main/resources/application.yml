@@ -6,17 +6,13 @@ spring:
     username: user
     password: user
     driver-class-name: com.mysql.cj.jdbc.Driver
-  liquibase:
-    enabled: false
-  jpa:
-    hibernate:
-      ddl-auto: none
+  security:
+
   flyway:
     user: user
     password: user
     schemas: userservice
     url: jdbc:mysql://host.docker.internal:3308/userservice?serverTimezone=UTC
     enabled: true
-    loc
 
 

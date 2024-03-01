@@ -6,16 +6,21 @@
 </head>
 <body>
 <h1>Register</h1>
-<img th:src="@{/images/TacoCloud.png}"/>
+<img th:src="@{/images/home.png}"/>
 <form method="POST" th:action="@{/register}" id="registerForm">
-    <label for="username">Username: </label>
+    <label for="username"> Username: </label>
     <input type="text" name="username"/><br/>
     <label for="password">  Password: </label>
     <input type="password" name="password"/><br/>
-    <label for="confirm">Confirm password: </label>
+    <label for="confirm"> Confirm password: </label>
     <input type="password" name="confirm"/><br/>
-    <label for="name">Full name: </label>
-    <input type="submit" value="Register"/>
+    <label for="fullname"> fullname: </label>
+    <input type="text" name="fullname"/><br/>
+    <label for="admin"> admin: </label>
+    <input type=checkbox name="admin"/><br/>
+    <label for="nonLocked"> nonLocked: </label>
+    <input type=checkbox name="nonlocked"/><br/>
+    <input type="submit" value="Registration"/>
 </form>
 </body>
 </html>
