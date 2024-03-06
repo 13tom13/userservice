@@ -1,10 +1,19 @@
-create table if not exists userservice.users
+
+create table users
 (
-    id        bigint       NOT NULL AUTO_INCREMENT,
-    username  varchar(255) not null,
-    password  varchar(255) not null,
-    fullname  varchar(255) not null,
-    admin     bool default 0,
-    nonLocked bool default 1,
-    PRIMARY KEY (id)
+    id       int auto_increment
+        primary key,
+    email    varchar(255) not null,
+    name     varchar(255) not null,
+    password varchar(255) not null
+);
+
+create table user_role
+(
+    id      int          not null primary key,
+    role_id int          not null,
+    user_id int          not null,
+    name    varchar(255) not null,
+    foreign key (user_id) references users (id),
+    foreign key (role_id) references user_role (id)
 );
