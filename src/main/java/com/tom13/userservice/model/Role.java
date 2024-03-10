@@ -3,20 +3,20 @@ package com.tom13.userservice.model;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotEmpty;
 import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.RequiredArgsConstructor;
 
+import java.io.Serializable;
 import java.util.List;
 
 @Data
 @Entity
 @Table(name = "user_role")
-public class Role {
+@RequiredArgsConstructor
+@NoArgsConstructor(force = true)
+public class Role implements Serializable {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
     @Column(nullable = false, unique = true)
     @NotEmpty
-    private String name;
-
-    @ManyToMany(mappedBy = "roles")
-    private List<User> users;
+    private final String name;
 }

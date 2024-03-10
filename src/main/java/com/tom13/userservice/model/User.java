@@ -33,10 +33,6 @@ public class User {
     private final String password;
 
     @ManyToMany(cascade = CascadeType.MERGE)
-    @JoinTable(
-            name = "user_role",
-            joinColumns = {@JoinColumn(name = "USER_ID", referencedColumnName = "ID")},
-            inverseJoinColumns = {@JoinColumn(name = "ROLE_ID", referencedColumnName = "ID")})
     private final List<Role> roles;
 
 }
