@@ -2,7 +2,7 @@ spring:
   thymeleaf:
     cache: false
   datasource:
-    url: jdbc:mysql://host.docker.internal:3308/userservice
+    url: jdbc:mysql://host.docker.internal:3306/userservice
     username: user
     password: user
     driver-class-name: com.mysql.cj.jdbc.Driver
@@ -11,7 +11,7 @@ spring:
     user: user
     password: user
     schemas: userservice
-    url: jdbc:mysql://host.docker.internal:3308/userservice
+    url: jdbc:mysql://host.docker.internal:3306/userservice
     enabled: true
 
   sql:
@@ -19,7 +19,7 @@ spring:
       mode: never
   jpa:
     hibernate:
-      ddl-auto: update
+      ddl-auto: none
     show-sql: true
     defer-datasource-initialization: false
 

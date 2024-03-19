@@ -1,10 +1,9 @@
 package com.tom13.userservice.repository;
 
-import com.tom13.userservice.model.Role;
+
+import com.tom13.userservice.entity.Role;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.repository.CrudRepository;
 
-import java.util.List;
-
-public interface RoleRepository extends JpaRepository<Role, String> {
+public interface RoleRepository extends JpaRepository<Role, Long> {
+    Role findByName(String name);
 }
