@@ -85,17 +85,11 @@
                            th:if="${#fields.hasErrors('password')}">
                         </p>
                     </div>
-                        <div class="form-check form-check-inline">
-                            <label class="form-check-label" for="inlineCheckbox2">Admin</label>
+                        <div class="form-check form-check-inline" th:each="role : ${roleList}">
+                            <label class="form-check-label" for="inlineCheckbox1" th:text="${role.substring(5)}">User_Role</label>
                             <input class="form-check-input" id="inlineCheckbox1"
-                                   type="checkbox" th:field="*{roles}" th:value="${'ROLE_ADMIN'}">
+                                   type="checkbox" th:field="*{roles}" th:value="${role}">
                         </div>
-                        <div class="form-check form-check-inline">
-                            <label class="form-check-label" for="inlineCheckbox2">User</label>
-                            <input class="form-check-input" id="inlineCheckbox2"
-                                   type="checkbox" th:field="*{roles}" th:value="${'ROLE_USER'}" checked>
-                        </div>
-
                     <div class="form-group mb-3">
                         <button class="btn btn-primary" type="submit">Register</button>
                         <span>Already registered? <a href="/" th:href="@{/login}">Login
