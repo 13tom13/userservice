@@ -60,6 +60,10 @@ public class UserServiceImpl implements UserService {
         userDto.setFirstName(name[0]);
         userDto.setLastName(name[1]);
         userDto.setEmail(user.getEmail());
+        userDto.setRoles(user.getRoles().stream()
+                .map(Role::getName)
+                .map(s -> s.substring(5).toLowerCase())
+                .collect(Collectors.toList()));
         return userDto;
     }
 
