@@ -86,12 +86,13 @@ public class SecurityConfig {
                 .authorizeHttpRequests((authorize) ->
                         authorize.requestMatchers("/register/**").permitAll()
                                 .requestMatchers("/index","/").permitAll()
-                                .requestMatchers("/users").hasRole("ADMIN")
+                                .requestMatchers("/admin/**").hasRole("ADMIN")
+                                .requestMatchers("/user/**").hasRole("USER")
                 ).formLogin(
                         form -> form
                                 .loginPage("/login")
                                 .loginProcessingUrl("/login")
-                                .defaultSuccessUrl("/users")
+                                .defaultSuccessUrl("/admin/users")
                                 .permitAll()
                 ).logout(
                         logout -> logout

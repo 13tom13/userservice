@@ -7,6 +7,9 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Data
 @NoArgsConstructor(access = AccessLevel.PUBLIC)
 @AllArgsConstructor
@@ -22,4 +25,7 @@ public class UserDto
     private String email;
     @NotEmpty(message = "Password should not be empty")
     private String password;
+
+    private List<String> roles = new ArrayList<>();
+
 }
