@@ -2,12 +2,10 @@ package com.tom13.userservice.controller;
 
 import com.tom13.userservice.dto.UserDto;
 import com.tom13.userservice.service.UserService;
-import jakarta.annotation.security.RolesAllowed;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -25,12 +23,16 @@ public class AdminController {
         return "users";
     }
 
-//    @GetMapping("/users")
-//    @RolesAllowed("ADMIN")
-//    public String deletUserFromDB(String email) {
-//        userService.delet
-//        model.addAttribute("users", users);
-//        return "users";
-//    }
+    @PostMapping("/users/deactivation/{id}")
+    public String deactivationUser(@PathVariable long id) {
+        userService.deactivationUser(id);
+        return "redirect:/admin/users";
+    }
+
+    @PostMapping("/users/activation/{id}")
+    public String activationUser(@PathVariable long id) {
+        userService.activationUser(id);
+        return "redirect:/admin/users";
+    }
 
 }

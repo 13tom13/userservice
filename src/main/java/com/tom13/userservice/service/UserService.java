@@ -9,7 +9,9 @@ import java.util.List;
 public interface UserService {
     void saveUser(UserDto userDto);
 
-    void deletUser(String email);
+    void deactivationUser(Long id);
+
+    void activationUser(Long id);
 
     User findByEmail(String email);
 

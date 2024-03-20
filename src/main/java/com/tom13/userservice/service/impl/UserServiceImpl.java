@@ -10,7 +10,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.Arrays;
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -30,17 +30,24 @@ public class UserServiceImpl implements UserService {
 
     private User CreatNewUserFromUserDTO(UserDto userDto) {
         User user = new User();
-        user.setName(userDto.getFirstName() + " " + userDto.getLastName());
+        user.setFirstName(userDto.getFirstName());
+        user.setLastName(userDto.getLastName());
         user.setEmail(userDto.getEmail());
+        user.setIsActive(true);
         user.setPassword(passwordEncoder.encode(userDto.getPassword()));
         user.setRoles(roleRepository.findByNameIn(userDto.getRoles()));
         return user;
     }
 
     @Override
-    public void deletUser(String email) {
-
+    public void deactivationUser(Long id) {
+        userRepository.updateUserIsActive(id,false);
     }
+    @Override
+    public void activationUser(Long id) {
+        userRepository.updateUserIsActive(id,true);
+    }
+
 
     @Override
     public User findByEmail(String email) {
@@ -51,15 +58,17 @@ public class UserServiceImpl implements UserService {
     public List<UserDto> findAllUsers() {
         List<User> users = userRepository.findAll();
         return users.stream().map(this::convertEntityToDto)
+                .sorted(Comparator.comparing(UserDto::getFirstName))
                 .collect(Collectors.toList());
     }
 
     private UserDto convertEntityToDto(User user) {
         UserDto userDto = new UserDto();
-        String[] name = user.getName().split(" ");
-        userDto.setFirstName(name[0]);
-        userDto.setLastName(name[1]);
+        userDto.setId(user.getId());
+        userDto.setFirstName(user.getFirstName());
+        userDto.setLastName(user.getLastName());
         userDto.setEmail(user.getEmail());
+        userDto.setIsActive(user.getIsActive());
         userDto.setRoles(user.getRoles().stream()
                 .map(Role::getName)
                 .map(s -> s.substring(5).toLowerCase())

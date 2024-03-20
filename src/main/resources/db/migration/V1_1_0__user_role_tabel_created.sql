@@ -1,13 +1,14 @@
-create table if not exists  roles
+CREATE TABLE IF NOT EXISTS roles
 (
-    id   bigint auto_increment primary key,
-    name varchar(255) not null unique
+    id   BIGINT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(255) NOT NULL UNIQUE
 );
 
-create table if not exists  users_roles
+CREATE TABLE IF NOT EXISTS users_roles
 (
-    role_id bigint not null,
-    user_id bigint not null,
-    foreign key (user_id) references users (id),
-    foreign key (role_id) references roles (id)
+    USER_ID BIGINT,
+    ROLE_ID BIGINT,
+    FOREIGN KEY (USER_ID) REFERENCES users (id),
+    FOREIGN KEY (ROLE_ID) REFERENCES roles (id),
+    PRIMARY KEY (USER_ID, ROLE_ID)
 );

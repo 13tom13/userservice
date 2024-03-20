@@ -1,4 +1,6 @@
-insert into users (name, email, password)
-    VALUE ('admin admin', 'admin13@mail.ru', '$2a$12$1Ef9I4Q51cQurR5kfldUWOqGgLH4nQNlwF8A/Vr/mVROcwFY3R9kK');
+insert into users (first_name, last_name, email, password)
+VALUE ('Admin', 'Adminovich','admin@mail.ru',
+       '$2a$12$e0zj3Zfmd3Cd1rN5Znm4YefODyVNMmNdfjjQ/166Ux7LBkIEHDjAS');
 
-
+insert into users_roles (role_id, user_id)
+    VALUES (1,1);
