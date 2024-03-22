@@ -8,13 +8,11 @@ import java.util.List;
 
 public interface UserService {
 
-    void saveUser(UserDto userDto);
-
     void deactivationUser(Long id);
 
     void activationUser(Long id);
 
-    UserDto findByEmail(String email);
+    User findByEmail(String email);
 
     List<UserDto> findAllUsers();
 

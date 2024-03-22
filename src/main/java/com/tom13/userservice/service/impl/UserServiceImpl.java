@@ -19,14 +19,6 @@ import java.util.stream.Collectors;
 public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
-    private final RoleRepository roleRepository;
-    private final PasswordEncoder passwordEncoder;
-
-    @Override
-    public void saveUser(UserDto userDto) {
-        User userFromUserDTO = CreatNewUserFromUserDTO(userDto);
-        userRepository.save(userFromUserDTO);
-    }
 
     @Override
     public void deactivationUser(Long id) {
@@ -46,15 +38,19 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserDto updateUserFirstName(Long id, String newFirstName) {
         userRepository.updateUserFirstName(id, newFirstName);
-        User
-        return null;
+        return findById(id);
+    }
+
+    @Override
+    public UserDto updateUserLastName(Long id, String newLastName) {
+        userRepository.updateUserLastName(id, newLastName);
+        return findById(id);
     }
 
 
     @Override
-    public UserDto findByEmail(String email) {
-        User userFromDB = userRepository.findByEmail(email);
-        return convertEntityToDto(userFromDB);
+    public User findByEmail(String email) {
+        return userRepository.findByEmail(email);
     }
 
     @Override
@@ -65,17 +61,6 @@ public class UserServiceImpl implements UserService {
                 .collect(Collectors.toList());
     }
 
-
-    private User CreatNewUserFromUserDTO(UserDto userDto) {
-        User user = new User();
-        user.setFirstName(userDto.getFirstName());
-        user.setLastName(userDto.getLastName());
-        user.setEmail(userDto.getEmail());
-        user.setIsActive(true);
-        user.setPassword(passwordEncoder.encode(userDto.getPassword()));
-        user.setRoles(roleRepository.findByNameIn(userDto.getRoles()));
-        return user;
-    }
 
     private UserDto convertEntityToDto(User user) {
         UserDto userDto = new UserDto();

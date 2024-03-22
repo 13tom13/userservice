@@ -21,18 +21,21 @@ public class CustomUserDetailsService implements UserDetailsService {
 
     private final UserRepository userRepository;
 
-    @Override
-    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-        User user = userRepository.findByEmail(email);
-
-        if (user != null) {
-            return new org.springframework.security.core.userdetails.User(user.getEmail(),
-                    user.getPassword(),
-                    mapRolesToAuthorities(user.getRoles()));
-        }else{
-            throw new UsernameNotFoundException("Invalid username or password.");
+        @Override
+        public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+            User user = userRepository.findByEmail(email);
+//            if (!user.getIsActive()){
+//                throw new UsernameNotFoundException("Invalid username or password.");
+//            }
+            if (user != null) {
+                return new org.springframework.security.core.userdetails.User
+                        (user.getEmail(), user.getPassword(),user.getIsActive(),
+                                true,true,true,
+                        mapRolesToAuthorities(user.getRoles()));
+            }else {
+                throw new UsernameNotFoundException("Invalid username or password.");
+            }
         }
-    }
 
     private Collection < ? extends GrantedAuthority> mapRolesToAuthorities(Collection <Role> roles) {
         Collection < ? extends GrantedAuthority> mapRoles = roles.stream()

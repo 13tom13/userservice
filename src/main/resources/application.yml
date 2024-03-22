@@ -2,17 +2,16 @@ spring:
   thymeleaf:
     cache: false
   datasource:
-    url: jdbc:mysql://host.docker.internal:3306/userservice
+    url: jdbc:postgresql://host.docker.internal:5432/userservice
     username: user
     password: user
-    driver-class-name: com.mysql.cj.jdbc.Driver
+    driver-class-name: org.postgresql.Driver
 
-  flyway:
+  liquibase:
+    change-log: classpath:/db/changelog/db.changelog-master.xml
+    url: jdbc:postgresql://host.docker.internal:5432/userservice
     user: user
     password: user
-    schemas: userservice
-    url: jdbc:mysql://host.docker.internal:3306/userservice
-    enabled: true
 
   sql:
     init:
@@ -22,4 +21,7 @@ spring:
       ddl-auto: none
     show-sql: true
     defer-datasource-initialization: false
-
+logging:
+  file:
+    name: myapp.log
+    path: /var/log/myapp
