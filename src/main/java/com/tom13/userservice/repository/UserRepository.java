@@ -12,4 +12,15 @@ public interface UserRepository extends JpaRepository<User, Long> {
     @Modifying
     @Query("UPDATE User u SET u.isActive = ?2 WHERE u.id = ?1")
     int updateUserIsActive(Long id,Boolean isActive);
+
+    @Transactional
+    @Modifying
+    @Query("UPDATE User u SET u.firstName = ?2 WHERE u.id = ?1")
+    User updateUserFirstName(Long id,String firstName);
+
+    @Transactional
+    @Modifying
+    @Query("UPDATE User u SET u.lastName = ?2 WHERE u.id = ?1")
+    int updateUserLastName(Long id,String lastName);
+
 }

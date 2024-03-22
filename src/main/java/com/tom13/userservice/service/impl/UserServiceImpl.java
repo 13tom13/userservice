@@ -28,17 +28,6 @@ public class UserServiceImpl implements UserService {
         userRepository.save(userFromUserDTO);
     }
 
-    private User CreatNewUserFromUserDTO(UserDto userDto) {
-        User user = new User();
-        user.setFirstName(userDto.getFirstName());
-        user.setLastName(userDto.getLastName());
-        user.setEmail(userDto.getEmail());
-        user.setIsActive(true);
-        user.setPassword(passwordEncoder.encode(userDto.getPassword()));
-        user.setRoles(roleRepository.findByNameIn(userDto.getRoles()));
-        return user;
-    }
-
     @Override
     public void deactivationUser(Long id) {
         userRepository.updateUserIsActive(id,false);
@@ -48,10 +37,24 @@ public class UserServiceImpl implements UserService {
         userRepository.updateUserIsActive(id,true);
     }
 
+    @Override
+    public UserDto findById(Long id){
+        User userFromDB = userRepository.findById(id).get();
+        return convertEntityToDto(userFromDB);
+    }
 
     @Override
-    public User findByEmail(String email) {
-        return userRepository.findByEmail(email);
+    public UserDto updateUserFirstName(Long id, String newFirstName) {
+        userRepository.updateUserFirstName(id, newFirstName);
+        User
+        return null;
+    }
+
+
+    @Override
+    public UserDto findByEmail(String email) {
+        User userFromDB = userRepository.findByEmail(email);
+        return convertEntityToDto(userFromDB);
     }
 
     @Override
@@ -60,6 +63,18 @@ public class UserServiceImpl implements UserService {
         return users.stream().map(this::convertEntityToDto)
                 .sorted(Comparator.comparing(UserDto::getFirstName))
                 .collect(Collectors.toList());
+    }
+
+
+    private User CreatNewUserFromUserDTO(UserDto userDto) {
+        User user = new User();
+        user.setFirstName(userDto.getFirstName());
+        user.setLastName(userDto.getLastName());
+        user.setEmail(userDto.getEmail());
+        user.setIsActive(true);
+        user.setPassword(passwordEncoder.encode(userDto.getPassword()));
+        user.setRoles(roleRepository.findByNameIn(userDto.getRoles()));
+        return user;
     }
 
     private UserDto convertEntityToDto(User user) {
