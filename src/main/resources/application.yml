@@ -25,3 +25,5 @@ logging:
   file:
     name: myapp.log
     path: /var/log/myapp
+  level:
+    org.springframework.web: DEBUG
