@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+>
+<head>
+    <meta charset="UTF-8">
+    <title>User Service</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css"
+          integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+</head>
+<body>
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="#">User Service</a>
+        <button class="navbar-toggler" type="button"
+                data-bs-toggle="collapse"
+                data-bs-target="#navbarSupportedContent"
+                aria-controls="navbarSupportedContent"
+                aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                    <a class="nav-link active" aria-current="page"
+                       th:href="@{/logout}">Logout</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+<div class="container">
+    <h2 class="display-9 fw-bold" th:text="'Welcome, ' + ${user.firstName} + ', you are an administrator!'">
+        Welcome, administrator!</h2>
+    <div th:if="${param.successFirstName}">
+        <div id="successFirstNameChangedMessage"
+             class="alert alert-info alert-dismissible fade show d-flex justify-content-between align-items-center">
+            You've successfully changed FirstName!
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    </div>
+    <div th:if="${param.successLastName}">
+        <div id="successLastNameChangedMessage"
+             class="alert alert-info alert-dismissible fade show d-flex justify-content-between align-items-center">
+            You've successfully changed LastName!
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    </div>
+    <div class="row g-3 mb-3 email">
+        <div class="col-xl-1">
+            <label for="email" class="col-form-label fw-bold">Email:</label>
+        </div>
+        <div class="col-xl-1">
+            <div id="email" class="col-form-label" th:text="${user.email}">email</div>
+        </div>
+    </div>
+    <form class="row g-3 mb-3 firstName" method="post" th:action="@{'/admin/updateFirstName/' + ${user.id}}">
+        <div class="col-xl-1">
+            <label for="inputFirstName" class="col-form-label fw-bold">FirstName:</label>
+        </div>
+        <div class="col-xl-1">
+            <label for="inputFirstName" class="col-form-label" th:text="${user.firstName}">firstName</label>
+        </div>
+        <div class="col-xl-2">
+            <label for="inputFirstName" class="visually-hidden"></label>
+            <input type="text" class="form-control" id="inputFirstName" name="newFirstName" placeholder="new firstName">
+        </div>
+        <div class="col-xl-1">
+            <button type="submit" class="btn btn-primary mb-3">Change</button>
+        </div>
+    </form>
+
+    <form class="row g-3 mb-3 lastName" method="post" th:action="@{'/admin/updateLastName/' + ${user.id}}">
+        <div class="col-xl-1">
+            <label for="inputLastName" class="col-form-label fw-bold">LastName:</label>
+        </div>
+        <div class="col-xl-1">
+            <label for="inputLastName" class="col-form-label" th:text="${user.lastName}">lastName</label>
+        </div>
+        <div class="col-xl-2">
+            <label for="inputLastName" class="visually-hidden"></label>
+            <input type="text" class="form-control" id="inputLastName" name="newLastName" placeholder="new lastName">
+        </div>
+        <div class="col-xl-1">
+            <button type="submit" class="btn btn-primary mb-3">Change</button>
+        </div>
+    </form>
+    <form class="row g-3 methods" method="get" th:action="@{'/admin/users'}">
+        <div class="col-xl-3">
+            <button type="submit" class="btn btn-primary mb-3">show all users</button>
+        </div>
+    </form>
+
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+        crossorigin="anonymous"></script>
+</body>
+</html>

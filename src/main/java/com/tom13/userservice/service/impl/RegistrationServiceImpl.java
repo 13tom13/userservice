@@ -30,7 +30,7 @@ public class RegistrationServiceImpl implements RegistrationService {
         userRepository.save(userFromUserDTO);
     }
 
-    protected User CreatNewUserFromUserDTO(UserDto userDto) {
+    private User CreatNewUserFromUserDTO(UserDto userDto) {
         User user = new User();
         user.setFirstName(userDto.getFirstName());
         user.setLastName(userDto.getLastName());

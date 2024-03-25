@@ -30,6 +30,7 @@ public class AdminController {
         userService.deactivationUser(id);
         return "redirect:/admin/users";
     }
+    //TODO: решить проблему с активацеик
 
     @PostMapping("/users/activation/{id}")
     public String activationUser(@PathVariable long id) {
@@ -49,6 +50,18 @@ public class AdminController {
         UserDto user = userService.findById(id);
         model.addAttribute("user", user);
         return "edit";
+    }
+
+    @PostMapping("/updateFirstName/{id}")
+    public String updateUserFirstName(@PathVariable long id, @RequestParam("newFirstName") String newFirstName){
+        userService.updateUserFirstName(id, newFirstName);
+        return "redirect:/account?successFirstName";
+    }
+
+    @PostMapping("/updateLastName/{id}")
+    public String updateUserLastName(@PathVariable long id, @RequestParam("newLastName") String newLastName){
+        userService.updateUserLastName(id, newLastName);
+        return "redirect:/account?successLastName";
     }
 
 }

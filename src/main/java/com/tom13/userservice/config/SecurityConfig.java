@@ -84,7 +84,7 @@ public class SecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http.csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests((authorize) ->
-                        authorize.requestMatchers("/login").permitAll()
+                        authorize.requestMatchers("/account").permitAll()
                                 .requestMatchers("/register/**").permitAll()
                                 .requestMatchers("/index","/").permitAll()
                                 .requestMatchers("/admin/**").hasRole("ADMIN")
@@ -93,7 +93,7 @@ public class SecurityConfig {
                         form -> form
                                 .loginPage("/login")
                                 .loginProcessingUrl("/login")
-                                .defaultSuccessUrl("/admin/users")
+                                .defaultSuccessUrl("/account")
                                 .permitAll()
                 ).logout(
                         logout -> logout
