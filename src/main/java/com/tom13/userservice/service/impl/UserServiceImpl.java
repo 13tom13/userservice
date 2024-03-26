@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @Service
 @RequiredArgsConstructor
@@ -63,10 +64,44 @@ public class UserServiceImpl implements UserService {
                 .collect(Collectors.toList());
     }
 
+//    @Override
+//    public List<UserDto> findAllUsersSortedBy(String sortBy, boolean sortAscending) {
+//        List<User> users = userRepository.findAll();
+//        Comparator<UserDto> comparator = switch (sortBy) {
+//            case "firstName" -> Comparator.comparing(UserDto::getFirstName);
+//            case "lastName" -> Comparator.comparing(UserDto::getLastName);
+//            case "email" -> Comparator.comparing(UserDto::getEmail);
+//            case "roles" -> Comparator.comparing((UserDto userDto) -> userDto.getRoles().toString());
+//            case "isActive" -> Comparator.comparing(UserDto::getIsActive);
+//            default -> Comparator.comparing(UserDto::getFirstName);
+//        };
+//
+//        if (sortAscending) {
+//            return sortUsers(users, comparator);
+//        } else {
+//            return sortUsers(users, comparator.reversed());
+//        }
+//    }
+//
+//    private List<UserDto> sortUsers(List<User> users, Comparator<UserDto> comparator) {
+//        return users.stream()
+//                .map(this::convertEntityToDto)
+//                .sorted(comparator)
+//                .collect(Collectors.toList());
+//    }
+
     @Override
-    public List<UserDto> findAllUsersSortedBy(String sortBy, boolean sortAscending) {
+    public List<UserDto> findAllUsersSortedBy(String sortBy, String sortDirection) {
         List<User> users = userRepository.findAll();
-        Comparator<UserDto> comparator = switch (sortBy) {
+        Comparator<UserDto> comparator = createComparator(sortBy);
+        if ("desc".equalsIgnoreCase(sortDirection)) {
+            comparator = comparator.reversed();
+        }
+        return sortUsers(users, comparator);
+    }
+
+    private Comparator<UserDto> createComparator(String sortBy) {
+        return switch (sortBy) {
             case "firstName" -> Comparator.comparing(UserDto::getFirstName);
             case "lastName" -> Comparator.comparing(UserDto::getLastName);
             case "email" -> Comparator.comparing(UserDto::getEmail);
@@ -74,12 +109,6 @@ public class UserServiceImpl implements UserService {
             case "isActive" -> Comparator.comparing(UserDto::getIsActive);
             default -> Comparator.comparing(UserDto::getFirstName);
         };
-
-        if (sortAscending) {
-            return sortUsers(users, comparator);
-        } else {
-            return sortUsers(users, comparator.reversed());
-        }
     }
 
     private List<UserDto> sortUsers(List<User> users, Comparator<UserDto> comparator) {

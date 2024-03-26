@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface UserService {
 
-    List<UserDto> findAllUsersSortedBy(String sortBy, boolean sortAscending);
+    List<UserDto> findAllUsersSortedBy(String sortBy, String sortDirection);
 
     void deactivationUser(Long id);
 

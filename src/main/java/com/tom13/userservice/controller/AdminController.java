@@ -19,23 +19,21 @@ public class AdminController {
 
     private final UserService userService;
 
+//    @GetMapping("/users")
+//    public String listRegisteredUsers(Model model, HttpSession session, @RequestParam(defaultValue = "firstName") String sortBy) {
+//        boolean sortAscending = getSessionSortDirection(session);
+//        List<UserDto> users = userService.findAllUsersSortedBy(sortBy, sortAscending);
+//        model.addAttribute("users", users);
+//        toggleSessionSortDirection(session);
+//        return "users";
+//    }
     @GetMapping("/users")
-    public String listRegisteredUsers(Model model, HttpSession session, @RequestParam(defaultValue = "firstName") String sortBy) {
-        boolean sortAscending = getSessionSortDirection(session);
-        List<UserDto> users = userService.findAllUsersSortedBy(sortBy, sortAscending);
+    public String listRegisteredUsers(Model model, @RequestParam(defaultValue = "firstName") String sortBy, @RequestParam(defaultValue = "asc") String sortDirection) {
+        List<UserDto> users = userService.findAllUsersSortedBy(sortBy, sortDirection);
         model.addAttribute("users", users);
-        toggleSessionSortDirection(session);
+        // Передайте sortDirection в шаблон Thymeleaf
+        model.addAttribute("sortDirection", sortDirection);
         return "users";
-    }
-
-    private boolean getSessionSortDirection(HttpSession session) {
-        Boolean sortAscending = (Boolean) session.getAttribute("sortAscending");
-        return sortAscending != null ? sortAscending : true;
-    }
-
-    private void toggleSessionSortDirection(HttpSession session) {
-        Boolean sortAscending = (Boolean) session.getAttribute("sortAscending");
-        session.setAttribute("sortAscending", sortAscending == null || !sortAscending);
     }
 
     @PostMapping("/users/deactivation/{id}")
@@ -43,7 +41,6 @@ public class AdminController {
         userService.deactivationUser(id);
         return "redirect:/admin/users";
     }
-    //TODO: решить проблему с активацеик
 
     @PostMapping("/users/activation/{id}")
     public String activationUser(@PathVariable long id) {

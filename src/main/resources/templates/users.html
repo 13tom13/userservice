@@ -43,15 +43,9 @@
     <table class="table table-striped table-bordered table-hover">
         <thead class="table-dark">
         <tr>
-            <!--            <th>First Name</th>-->
-            <!--            <th>Last Name</th>-->
-            <!--            <th>Email</th>-->
-            <!--            <th>Roles</th>-->
-            <!--            <th>Active</th>-->
-            <!--            <th></th>-->
-            <!--            <th><a href="/admin/users?sortBy=firstName">First Name</a></th>-->
-            <th  class="col-xl-1">
-                <a href="/admin/users?sortBy=firstName" style="color: aliceblue">
+            <th class="col-xl-1">
+                <a th:href="@{/admin/users(sortBy='firstName',sortDirection=${sortDirection eq 'asc' ? 'desc' : 'asc'})}"
+                   style="color: aliceblue">
                     First Name
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                          class="bi bi-sort" viewBox="0 0 16 16">
@@ -60,7 +54,8 @@
                 </a>
             </th>
             <th class="col-xl-1">
-                <a href="/admin/users?sortBy=lastName" style="color: aliceblue">
+                <a th:href="@{/admin/users(sortBy='lastName',sortDirection=${sortDirection eq 'asc' ? 'desc' : 'asc'})}"
+                   style="color: aliceblue">
                     Last Name
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                          class="bi bi-sort" viewBox="0 0 16 16">
@@ -69,7 +64,8 @@
                 </a>
             </th>
             <th class="col-xl-1">
-                <a href="/admin/users?sortBy=email" style="color: aliceblue">
+                <a th:href="@{/admin/users(sortBy='email',sortDirection=${sortDirection eq 'asc' ? 'desc' : 'asc'})}"
+                   style="color: aliceblue">
                     Email
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                          class="bi bi-sort" viewBox="0 0 16 16">
@@ -78,7 +74,8 @@
                 </a>
             </th>
             <th class="col-xl-1">
-                <a href="/admin/users?sortBy=roles" style="color: aliceblue">
+                <a th:href="@{/admin/users(sortBy='roles',sortDirection=${sortDirection eq 'asc' ? 'desc' : 'asc'})}"
+                   style="color: aliceblue">
                     Roles
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                          class="bi bi-sort" viewBox="0 0 16 16">
@@ -87,7 +84,8 @@
                 </a>
             </th>
             <th class="col-xl-1">
-                <a href="/admin/users?sortBy=isActive" style="color: aliceblue">
+                <a th:href="@{/admin/users(sortBy='isActive',sortDirection=${sortDirection eq 'asc' ? 'desc' : 'asc'})}"
+                   style="color: aliceblue">
                     Active
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                          class="bi bi-sort" viewBox="0 0 16 16">
@@ -108,8 +106,11 @@
             </td>
             <td th:text="${user.isActive}"></td>
             <td>
-                <form id="userActionForm" th:action="@{'/admin/users/' + (${user.isActive} ? 'deactivation/' : 'activation/') + ${user.id}}" method="post">
-                    <button type="submit" class="btn btn-primary active" role="button" data-bs-toggle="button" aria-pressed="true">
+                <form id="userActionForm"
+                      th:action="@{'/admin/users/' + (${user.isActive} ? 'deactivation/' : 'activation/') + ${user.id}}"
+                      method="post">
+                    <button type="submit" class="btn btn-primary active" role="button" data-bs-toggle="button"
+                            aria-pressed="true">
                         <span th:text="${user.isActive ? 'Deactivate' : 'Activate'}"></span>
                     </button>
                 </form>
@@ -118,9 +119,9 @@
         </tbody>
     </table>
 </div>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.js"
         integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
         crossorigin="anonymous"></script>
 </body>
-
 </html>
+
