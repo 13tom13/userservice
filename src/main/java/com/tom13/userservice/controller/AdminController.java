@@ -3,6 +3,7 @@ package com.tom13.userservice.controller;
 import com.tom13.userservice.dto.UserDto;
 import com.tom13.userservice.entity.User;
 import com.tom13.userservice.service.UserService;
+import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -18,20 +19,23 @@ public class AdminController {
 
     private final UserService userService;
 
-    private boolean sortAscending = true;
-
-//    @GetMapping("/users")
-//    public String listRegisteredUsers(Model model) {
-//        List<UserDto> users = userService.findAllUsers();
-//        model.addAttribute("users", users);
-//        return "users";
-//    }
     @GetMapping("/users")
-    public String listRegisteredUsers(Model model, @RequestParam(defaultValue = "firstName") String sortBy) {
+    public String listRegisteredUsers(Model model, HttpSession session, @RequestParam(defaultValue = "firstName") String sortBy) {
+        boolean sortAscending = getSessionSortDirection(session);
         List<UserDto> users = userService.findAllUsersSortedBy(sortBy, sortAscending);
         model.addAttribute("users", users);
-        sortAscending = !sortAscending;
+        toggleSessionSortDirection(session);
         return "users";
+    }
+
+    private boolean getSessionSortDirection(HttpSession session) {
+        Boolean sortAscending = (Boolean) session.getAttribute("sortAscending");
+        return sortAscending != null ? sortAscending : true;
+    }
+
+    private void toggleSessionSortDirection(HttpSession session) {
+        Boolean sortAscending = (Boolean) session.getAttribute("sortAscending");
+        session.setAttribute("sortAscending", sortAscending == null || !sortAscending);
     }
 
     @PostMapping("/users/deactivation/{id}")

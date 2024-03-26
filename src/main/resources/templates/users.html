@@ -108,16 +108,9 @@
             </td>
             <td th:text="${user.isActive}"></td>
             <td>
-                <form th:if="${user.isActive}" id="deactivationForm"
-                      th:action="@{'/admin/users/deactivation/' + ${user.id}}" method="post">
-                    <button type="submit" class="btn btn-primary active"
-                            role="button" data-bs-toggle="button" aria-pressed="true"> Deactivate
-                    </button>
-                </form>
-                <form th:if="${!user.isActive}" id="activationForm"
-                      th:action="@{'/admin/users/activation/' + ${user.id}}" method="post">
-                    <button type="submit" class="btn btn-primary active"
-                            role="button" data-bs-toggle="button" aria-pressed="true"> Activate
+                <form id="userActionForm" th:action="@{'/admin/users/' + (${user.isActive} ? 'deactivation/' : 'activation/') + ${user.id}}" method="post">
+                    <button type="submit" class="btn btn-primary active" role="button" data-bs-toggle="button" aria-pressed="true">
+                        <span th:text="${user.isActive ? 'Deactivate' : 'Activate'}"></span>
                     </button>
                 </form>
             </td>
