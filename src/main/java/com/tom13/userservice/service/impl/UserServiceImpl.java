@@ -63,6 +63,32 @@ public class UserServiceImpl implements UserService {
                 .collect(Collectors.toList());
     }
 
+    @Override
+    public List<UserDto> findAllUsersSortedBy(String sortBy, boolean sortAscending) {
+        List<User> users = userRepository.findAll();
+        Comparator<UserDto> comparator = switch (sortBy) {
+            case "firstName" -> Comparator.comparing(UserDto::getFirstName);
+            case "lastName" -> Comparator.comparing(UserDto::getLastName);
+            case "email" -> Comparator.comparing(UserDto::getEmail);
+            case "roles" -> Comparator.comparing((UserDto userDto) -> userDto.getRoles().toString());
+            case "isActive" -> Comparator.comparing(UserDto::getIsActive);
+            default -> Comparator.comparing(UserDto::getFirstName);
+        };
+
+        if (sortAscending) {
+            return sortUsers(users, comparator);
+        } else {
+            return sortUsers(users, comparator.reversed());
+        }
+    }
+
+    private List<UserDto> sortUsers(List<User> users, Comparator<UserDto> comparator) {
+        return users.stream()
+                .map(this::convertEntityToDto)
+                .sorted(comparator)
+                .collect(Collectors.toList());
+    }
+
 
     private UserDto convertEntityToDto(User user) {
         UserDto userDto = new UserDto();

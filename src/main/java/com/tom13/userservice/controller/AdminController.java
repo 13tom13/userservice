@@ -18,10 +18,19 @@ public class AdminController {
 
     private final UserService userService;
 
+    private boolean sortAscending = true;
+
+//    @GetMapping("/users")
+//    public String listRegisteredUsers(Model model) {
+//        List<UserDto> users = userService.findAllUsers();
+//        model.addAttribute("users", users);
+//        return "users";
+//    }
     @GetMapping("/users")
-    public String listRegisteredUsers(Model model) {
-        List<UserDto> users = userService.findAllUsers();
+    public String listRegisteredUsers(Model model, @RequestParam(defaultValue = "firstName") String sortBy) {
+        List<UserDto> users = userService.findAllUsersSortedBy(sortBy, sortAscending);
         model.addAttribute("users", users);
+        sortAscending = !sortAscending;
         return "users";
     }
 
